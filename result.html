@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Calculation Result</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    /* Centering box */
+    .center-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .result-box {
+        border: 2px solid #6c757d; /* Placeholder color */
+        padding: 20px;
+        width: 400px; /* Adjust the width as needed */
+        border-radius: 10px; /* Curved from all four sides */
+        text-align: center; /* Center align text */
+    }
+    .large-text {
+        font-size: 24px; /* Large font size */
+        margin-bottom: 5px; /* Adjust margin bottom */
+    }
+    .small-text {
+        font-size: 14px; /* Small font size */
+        margin-top: 5px; /* Adjust margin top */
+    }
+</style>
+</head>
+<body>
+<div class="center-box">
+    <div class="result-box rounded">
+        <div class="container mt-5">
+            <h5 class="large-text">Your overall income will be</h5>
+            <p class="large-text" id="overallIncome"></p> <!-- Display overall income here -->
+            <p class="small-text">after tax deductions</p>
+            <button type="button" class="btn btn-primary" onclick="closeTab()">Close</button> <!-- Close button -->
+        </div>
+    </div>
+</div>
+<script>
+    // Retrieve parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const overallIncomeString = params.get('overallIncome');
+    const taxDeductionsString = params.get('taxDeductions');
+
+    // Parse values as integers with error handling
+    const overallIncome = parseInt(overallIncomeString);
+    const taxDeductions = parseInt(taxDeductionsString);
+
+    // Calculate overall income after deductions
+    const overallIncomeAfterDeduction = overallIncome - taxDeductions;
+
+    // Display overall income after deductions
+    if (!isNaN(overallIncomeAfterDeduction)) {
+        document.getElementById('overallIncome').textContent = overallIncomeAfterDeduction.toLocaleString('en-IN');
+    } else {
+        document.getElementById('overallIncome').textContent = "Error: Overall income after deduction value is invalid";
+    }
+
+    // Function to close the tab
+    function closeTab() {
+        window.open('', '_self', ''); // Open a blank page in the same tab
+        window.close(); // Close the tab
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
