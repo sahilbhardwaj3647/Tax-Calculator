@@ -31,6 +31,7 @@ If the overall income (after deductions) is equal to or less than 8 Lakhs, no ta
 Example:
 If Gross Annual Income + Extra Income - Deductions = 6 Lakhs, no tax is applied.
 If Gross Annual Income + Extra Income - Deductions = 9 Lakhs, tax is applied.
+
 Taxation Over 8 Lakhs:
 
 -> For income exceeding 8 Lakhs:
@@ -39,6 +40,7 @@ Taxation Over 8 Lakhs:
 10% tax for individuals aged 60 or older.
 
 Example:
+
 For an individual aged 34 with an income of 40 Lakhs and no deductions:
 Tax = 30% * (40 - 8) = 9.6 Lakhs.
 
