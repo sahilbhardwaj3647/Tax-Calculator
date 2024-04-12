@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Calculator</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    /* Custom CSS for error icon */
+    .error-icon {
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: 10px; /* Adjust the position */
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #6c757d; /* Placeholder color */
+    }
+    /* Custom CSS for tooltip */
+    .tooltip-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        border-radius: 50%;
+        border: 2px solid #6c757d; /* Placeholder color */
+        color: #6c757d; /* Placeholder color */
+        font-size: 10px; /* Adjust font size for "?" symbol */
+        position: relative;
+    }
+    .tooltip-icon::before {
+        content: "?";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .input-group {
+        position: relative;
+    }
+    .input-group-addon {
+        position: absolute;
+        top: 50%;
+        right: 10px; /* Adjust the position */
+        transform: translateY(-50%);
+        background-color: #fff;
+        border: 2px solid #6c757d; /* Placeholder color */
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: #6c757d; /* Placeholder color */
+    }
+    /* Remove default spinner arrows */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    /* Centering box */
+    .center-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .external-box {
+        border: 2px solid #6c757d; /* Placeholder color */
+        padding: 20px;
+        width: 400px; /* Adjust the width as needed */
+        margin-bottom: 20px;
+    }
+    .content-box {
+        border-radius: 10px; /* Curved from all four sides */
+        padding: 20px;
+    }
+    .content-box label {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    /* Custom CSS for input boxes */
+    .form-control {
+        border-color: #6c757d; /* Placeholder color */
+        border-radius: 10px; /* Curved from all four sides */
+    }
+    .error-icon-circle {
+        position: absolute;
+        top: 50%;
+        right: 30px; /* Adjust the position */
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        border-radius: 50%;
+        border: 2px solid #6c757d; /* Placeholder color */
+        color: #6c757d; /* Placeholder color */
+        font-size: 10px; /* Adjust font size for "!" symbol */
+    }
+    .submit-btn {
+        background-color: #007bff; /* Blue background */
+        color: #fff; /* White text */
+        width: 100%; /* Same width as input */
+        border-radius: 10px; /* Same rounded corners as input */
+        margin-top: 20px; /* Add margin to separate from inputs */
+        padding: 10px; /* Add padding for better visibility */
+    }
+</style>
+</head>
+<body>
+<div class="center-box">
+    <div class="external-box">
+        <div class="content-box rounded">
+            <div class="container mt-5">
+                <form id="taxCalculatorForm">
+                    <div class="form-group">
+                        <label for="grossAnnualIncome">Enter gross annual income <span class="tooltip-icon" data-toggle="tooltip" data-placement="right" title="Gross annual income is your total salary in a year before any deductions"></span></label>
+                        <div class="input-group rounded">
+                            <input type="text" class="form-control rounded" id="grossAnnualIncome" name="grossAnnualIncome" placeholder="Enter gross annual income" autocomplete="off" oninput="validateNumberInput(this)">
+                            <div class="error-icon-circle" id="grossAnnualIncomeError" title="Please enter a valid number">!</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="extraIncome">Enter extra income <span class="tooltip-icon" data-toggle="tooltip" data-placement="right" title="Extra income is income from sources other than your salary"></span></label>
+                        <input type="text" class="form-control rounded" id="extraIncome" name="extraIncome" placeholder="Enter extra income from other sources" oninput="validateNumberInput(this)">
+                        <div class="error-icon" id="extraIncomeError" title="Please enter a valid number">!</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Select age group <span class="tooltip-icon" data-toggle="tooltip" data-placement="right" title="Please select your age group">&#9432;</span></label>
+                        <select class="form-control rounded" id="age" name="age" required>
+                            <option value="">Select Age Group</option>
+                            <option value="<40">&lt; 40</option>
+                            <option value="≥40&<60">≥ 40 &amp; &lt; 60</option>
+                            <option value="≥60">≥ 60</option>
+                        </select>
+                        <div class="invalid-feedback" id="ageError">Please select an age group.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deductions">Enter total applicable deductions <span class="tooltip-icon" data-toggle="tooltip" data-placement="right" title="Total applicable deductions include deductions such as investments, insurance premiums, etc."></span></label>
+                        <input type="text" class="form-control rounded" id="deductions" name="deductions" placeholder="Add total applicable deductions" oninput="validateNumberInput(this)">
+                        <div class="error-icon" id="deductionsError" title="Please enter a valid number">!</div>
+                    </div>
+                    
+                    <button type="button" class="submit-btn" onclick="validateAndSubmit()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function validateNumberInput(input) {
+        const value = input.value;
+        const isValidNumber = /^[0-9]*$/.test(value); // Check if input contains only numbers
+        const errorIcon = input.parentElement.querySelector('.error-icon-circle');
+        
+        if (!isValidNumber) {
+            errorIcon.style.display = 'block'; // Show error icon if input is not a valid number
+        } else {
+            errorIcon.style.display = 'none'; // Hide error icon if input is a valid number
+        }
+    }
+
+    function validateAge() {
+        const ageInput = document.getElementById('age');
+        // Check if an age group is selected
+        if (ageInput.value !== '') {
+            // Hide the error icon if an age group is selected
+            ageInput.parentElement.querySelector('.error-icon').style.display = 'none';
+        } else {
+            // Show the error icon if no age group is selected
+            ageInput.parentElement.querySelector('.error-icon').style.display = 'block';
+        }
+    }
+
+    function validateAndSubmit() {
+        const grossAnnualIncome = parseFloat(document.getElementById('grossAnnualIncome').value) || 0;
+        const extraIncome = parseFloat(document.getElementById('extraIncome').value) || 0;
+        const deductions = parseFloat(document.getElementById('deductions').value) || 0;
+        const ageGroup = document.getElementById('age').value;
+
+        // Validate age group
+        if (ageGroup === '') {
+            document.getElementById('ageError').style.display = 'block';
+            return;
+        }
+
+        // If all inputs are valid, construct query parameters and redirect to the result page
+        const totalIncome = grossAnnualIncome + extraIncome - deductions;
+        const tax = calculateTax(totalIncome, ageGroup);
+        const queryString = `?overallIncome=${totalIncome}&taxDeductions=${tax}`;
+        window.location.href = 'result.html' + queryString;
+    }
+
+    function calculateTax(totalIncome, ageGroup) {
+        let tax = 0;
+        if (totalIncome > 800000) {
+            if (ageGroup === "<40") {
+                tax = 0.3 * (totalIncome - 800000);
+            } else if (ageGroup === "≥40&<60") {
+                tax = 0.4 * (totalIncome - 800000);
+            } else if (ageGroup === "≥60") {
+                tax = 0.1 * (totalIncome - 800000);
+            }
+        }
+        return tax;
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
