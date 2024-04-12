@@ -40,7 +40,6 @@ Taxation Over 8 Lakhs:
 10% tax for individuals aged 60 or older.
 
 Example:
-
 For an individual aged 34 with an income of 40 Lakhs and no deductions:
 Tax = 30% * (40 - 8) = 9.6 Lakhs.
 
