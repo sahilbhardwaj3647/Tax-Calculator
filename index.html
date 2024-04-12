@@ -181,37 +181,50 @@
     }
 
     function validateAndSubmit() {
-        const grossAnnualIncome = parseFloat(document.getElementById('grossAnnualIncome').value) || 0;
-        const extraIncome = parseFloat(document.getElementById('extraIncome').value) || 0;
-        const deductions = parseFloat(document.getElementById('deductions').value) || 0;
-        const ageGroup = document.getElementById('age').value;
+    const grossAnnualIncome = parseFloat(document.getElementById('grossAnnualIncome').value) || 0;
+    const extraIncome = parseFloat(document.getElementById('extraIncome').value) || 0;
+    const deductions = parseFloat(document.getElementById('deductions').value) || 0;
+    const ageGroup = document.getElementById('age').value;
 
-        // Validate age group
-        if (ageGroup === '') {
-            document.getElementById('ageError').style.display = 'block';
-            return;
-        }
-
-        // If all inputs are valid, construct query parameters and redirect to the result page
-        const totalIncome = grossAnnualIncome + extraIncome - deductions;
-        const tax = calculateTax(totalIncome, ageGroup);
-        const queryString = `?overallIncome=${totalIncome}&taxDeductions=${tax}`;
-        window.location.href = 'result.html' + queryString;
+    // Validate age group
+    if (ageGroup === '') {
+        document.getElementById('ageError').style.display = 'block';
+        return;
     }
+
+    // Calculate total income before tax deductions
+    const totalIncome = grossAnnualIncome + extraIncome;
+
+    // Calculate tax deductions
+    const tax = calculateTax(totalIncome, ageGroup);
+
+    // Calculate overall income after tax deductions
+    const overallIncome = totalIncome - tax - deductions;
+
+    // Construct query parameters and redirect to the result page
+    const queryString = `?overallIncome=${overallIncome}&taxDeductions=${tax}`;
+    window.location.href = 'result.html' + queryString;
+}
+
+
 
     function calculateTax(totalIncome, ageGroup) {
-        let tax = 0;
-        if (totalIncome > 800000) {
-            if (ageGroup === "<40") {
-                tax = 0.3 * (totalIncome - 800000);
-            } else if (ageGroup === "≥40&<60") {
-                tax = 0.4 * (totalIncome - 800000);
-            } else if (ageGroup === "≥60") {
-                tax = 0.1 * (totalIncome - 800000);
-            }
-        }
-        return tax;
+    if (totalIncome <= 800000) {
+        return 0; // No tax for income less than or equal to 8 lakhs
     }
+
+    let tax = 0;
+    if (ageGroup === "<40") {
+        tax = 0.3 * (totalIncome - 800000);
+    } else if (ageGroup === "≥40&<60") {
+        tax = 0.4 * (totalIncome - 800000);
+    } else if (ageGroup === "≥60") {
+        tax = 0.1 * (totalIncome - 800000);
+    }
+    return tax;
+}
+
+
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
