@@ -43,6 +43,19 @@ Example:
 For an individual aged 34 with an income of 40 Lakhs and no deductions:
 Tax = 30% * (40 - 8) = 9.6 Lakhs.
 
+
+![index_main](https://github.com/sahilbhardwaj3647/Tax-Calculator/assets/159801921/f91dc814-ae45-46f4-a7f2-61ce8d41228a)
+
+RESULT
+
+![index_result](https://github.com/sahilbhardwaj3647/Tax-Calculator/assets/159801921/b1a423ed-cfc2-445e-b80e-6f97b7b97103)
+
+Also it will NOT get submitted until the AGE GROUP is selected by the user
+
+![age_error](https://github.com/sahilbhardwaj3647/Tax-Calculator/assets/159801921/61083b49-13b1-403f-8964-c9cf35021f54)
+
+
+
 ## Technologies Used
 
 - HTML
