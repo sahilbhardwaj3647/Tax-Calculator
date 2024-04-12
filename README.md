@@ -34,8 +34,8 @@ If Gross Annual Income + Extra Income - Deductions = 9 Lakhs, tax is applied.
 Taxation Over 8 Lakhs:
 
 -> For income exceeding 8 Lakhs:
-30% tax for individuals aged less than 40.
-40% tax for individuals aged 40 or older but less than 60.
+30% tax for individuals aged less than 40,
+40% tax for individuals aged 40 or older but less than 60,
 10% tax for individuals aged 60 or older.
 
 Example:
